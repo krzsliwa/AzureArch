@@ -4,7 +4,7 @@
   "parameters": {
     "vnetName": {
       "type": "string",
-      "defaultValue": "ksVNet1",
+      "defaultValue": "ksVNet",
       "metadata": {
         "description": "VNet name"
       }
