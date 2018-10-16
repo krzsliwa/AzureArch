@@ -16,6 +16,20 @@
         "description": "Address prefix"
       }
     },
+    "subnet1Prefix": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/24",
+      "metadata": {
+        "description": "Subnet 1 Prefix"
+      }
+    },
+    "subnet1Name": {
+      "type": "string",
+      "defaultValue": "ksSubnet1",
+      "metadata": {
+        "description": "Subnet 1 Name"
+      }
+    },
     "subnet2Prefix": {
       "type": "string",
       "defaultValue": "10.0.1.0/24",
@@ -54,16 +68,28 @@
       }
     },
     {
-       "apiVersion": "2018-06-01",
-        "type": "Microsoft.Network/virtualNetworks/subnets",
-        "location": "[parameters('location')]",
-        "name": "[concat(parameters('vnetName'),'/',parameters('subnet2Name'))]",
-        "dependsOn": [
-          "[parameters('vnetName')]"
-        ],
-        "properties": {
-          "addressPrefix": "[parameters('subnet2Prefix')]"
-        }
+      "apiVersion": "2018-06-01",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "location": "[parameters('location')]",
+      "name": "[concat(parameters('vnetName'),'/',parameters('subnet1Name'))]",
+      "dependsOn": [
+        "[parameters('vnetName')]"
+      ],
+      "properties": {
+        "addressPrefix": "[parameters('subnet1Prefix')]"
       }
+    },
+    {
+      "apiVersion": "2018-06-01",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "location": "[parameters('location')]",
+      "name": "[concat(parameters('vnetName'),'/',parameters('subnet2Name'))]",
+      "dependsOn": [
+        "[parameters('vnetName')]"
+      ],
+      "properties": {
+        "addressPrefix": "[parameters('subnet2Prefix')]"
+      }
+    }
   ]
 }
