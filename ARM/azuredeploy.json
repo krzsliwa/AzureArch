@@ -16,6 +16,20 @@
         "description": "Address prefix"
       }
     },
+    "publicIPName": {
+      "type": "string",
+      "defaultValue": "ksPublicIPAddress",
+      "metadata": {
+        "description": "Public IP Name"
+      }
+    },
+    "dnsPrefix": {
+      "type": "string",
+      "defaultValue": "ksw3",
+      "metadata": {
+        "description": "DNS Prefix"
+      }
+    },
     "subnet1Prefix": {
       "type": "string",
       "defaultValue": "10.0.0.0/24",
@@ -28,6 +42,20 @@
       "defaultValue": "ksSubnet1",
       "metadata": {
         "description": "Subnet 1 Name"
+      }
+    },
+    "nic1Name": {
+      "type": "string",
+      "defaultValue": "ksNetworkInterface1",
+      "metadata": {
+        "description": "Network Interface 1 Name"
+      }
+    },
+    "ipConfig1Name": {
+      "type": "string",
+      "defaultValue": "ksipconfig1",
+      "metadata": {
+        "description": "IP Configuration Network 1 Name"
       }
     },
     "subnet2Prefix": {
@@ -52,7 +80,12 @@
       }
     }
   },
-  "variables": {},
+  "variables": {
+    "subnet1Path": "[concat(parameters('vnetName'),'/',parameters('subnet1Name'))]",
+    "pubIPRef": "[resourceId('Microsoft.Network/publicIPAddresses/',parameters('publicIPName'))]",
+    "vNetRef": "[resourceId('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
+    "subnet1Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnet1Name'))]"
+  },
   "resources": [
     {
       "apiVersion": "2018-06-01",
@@ -68,10 +101,22 @@
       }
     },
     {
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[parameters('publicIPName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('dnsPrefix')]"
+        }
+      }
+    },
+    {
       "apiVersion": "2018-06-01",
       "type": "Microsoft.Network/virtualNetworks/subnets",
       "location": "[parameters('location')]",
-      "name": "[concat(parameters('vnetName'),'/',parameters('subnet1Name'))]",
+      "name": "[variables('subnet1Path')]",
       "dependsOn": [
         "[parameters('vnetName')]"
       ],
@@ -80,15 +125,29 @@
       }
     },
     {
-      "apiVersion": "2018-06-01",
-      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "apiVersion": "2016-03-30",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[parameters('nic1Name')]",
       "location": "[parameters('location')]",
-      "name": "[concat(parameters('vnetName'),'/',parameters('subnet2Name'))]",
       "dependsOn": [
-        "[parameters('vnetName')]"
+        "[variables('pubIPRef')]",
+        "[variables('subnet1Ref')]"
       ],
       "properties": {
-        "addressPrefix": "[parameters('subnet2Prefix')]"
+        "ipConfigurations": [
+          {
+            "name": "[parameters('ipConfig1Name')]",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[variables('pubIPRef')]"
+              },
+              "subnet": {
+                "id": "[variables('subnet1Ref')]"
+              }
+            }
+          }
+        ]
       }
     }
   ]
