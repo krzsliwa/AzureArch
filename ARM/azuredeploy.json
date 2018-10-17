@@ -16,13 +16,6 @@
         "description": "Address prefix"
       }
     },
-    "publicIPName": {
-      "type": "string",
-      "defaultValue": "ksPublicIPAddress",
-      "metadata": {
-        "description": "Public IP Name"
-      }
-    },
     "dnsPrefix": {
       "type": "string",
       "defaultValue": "ksw3",
@@ -44,18 +37,25 @@
         "description": "Subnet 1 Name"
       }
     },
+    "publicIPName1": {
+      "type": "string",
+      "defaultValue": "ksPublicIPAddress1",
+      "metadata": {
+        "description": "Subnet 1 Public IP Name"
+      }
+    },
     "nic1Name": {
       "type": "string",
       "defaultValue": "ksNetworkInterface1",
       "metadata": {
-        "description": "Network Interface 1 Name"
+        "description": "Subnet Network Interface 1 Name"
       }
     },
     "ipConfig1Name": {
       "type": "string",
       "defaultValue": "ksipconfig1",
       "metadata": {
-        "description": "IP Configuration Network 1 Name"
+        "description": "IP Configuration Subnet 1 Name"
       }
     },
     "subnet2Prefix": {
@@ -82,7 +82,7 @@
   },
   "variables": {
     "subnet1Path": "[concat(parameters('vnetName'),'/',parameters('subnet1Name'))]",
-    "pubIPRef": "[resourceId('Microsoft.Network/publicIPAddresses/',parameters('publicIPName'))]",
+    "pubIP1Ref": "[resourceId('Microsoft.Network/publicIPAddresses/',parameters('publicIPName1'))]",
     "vNetRef": "[resourceId('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
     "subnet1Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnet1Name'))]"
   },
@@ -130,7 +130,7 @@
       "name": "[parameters('nic1Name')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[variables('pubIPRef')]",
+        "[variables('pubIP1Ref')]",
         "[variables('subnet1Ref')]"
       ],
       "properties": {
@@ -140,7 +140,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "publicIPAddress": {
-                "id": "[variables('pubIPRef')]"
+                "id": "[variables('pubIP1Ref')]"
               },
               "subnet": {
                 "id": "[variables('subnet1Ref')]"
