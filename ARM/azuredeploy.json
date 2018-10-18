@@ -23,6 +23,13 @@
         "description": "DNS Prefix"
       }
     },
+    "networkSecurityGroupName": {
+      "type": "string",
+      "defaultValue": "ksnsg",
+      "metadata": {
+        "description": "Network Security Group Name"
+      }
+    },
     "subnet1Prefix": {
       "type": "string",
       "defaultValue": "10.0.0.0/24",
@@ -83,21 +90,59 @@
   "variables": {
     "subnet1Path": "[concat(parameters('vnetName'),'/',parameters('subnet1Name'))]",
     "pubIP1Ref": "[resourceId('Microsoft.Network/publicIPAddresses/',parameters('publicIPName1'))]",
+    "nsgRef": "[resourceId('Microsoft.Network/networkSecurityGroups/', parameters('networkSecurityGroupName'))]",
     "vNetRef": "[resourceId('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
     "subnet1Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnet1Name'))]"
   },
   "resources": [
     {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "[parameters('networkSecurityGroupName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "ksAllowHTTP",
+            "properties": {
+              "description": "Allow HTTP inbound access",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "80",
+              "sourceAddressPrefix": "*",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
+    },
+    {
       "apiVersion": "2018-06-01",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[parameters('vnetName')]",
       "location": "[parameters('location')]",
+      "dependsOn": [
+        "[variables('nsgRef')]"
+      ],
       "properties": {
         "addressSpace": {
           "addressPrefixes": [
             "[parameters('vnetAddressPrefix')]"
           ]
-        }
+        },
+        "subnets": [
+          {
+            "name": "[parameters('subnet1Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet1Prefix')]",
+              "networkSecurityGroup": {
+                "id": "[variables('nsgRef')]"
+            }
+          }
+        ]
       }
     },
     {
@@ -113,25 +158,13 @@
       }
     },
     {
-      "apiVersion": "2018-06-01",
-      "type": "Microsoft.Network/virtualNetworks/subnets",
-      "location": "[parameters('location')]",
-      "name": "[variables('subnet1Path')]",
-      "dependsOn": [
-        "[parameters('vnetName')]"
-      ],
-      "properties": {
-        "addressPrefix": "[parameters('subnet1Prefix')]"
-      }
-    },
-    {
       "apiVersion": "2016-03-30",
       "type": "Microsoft.Network/networkInterfaces",
       "name": "[parameters('nic1Name')]",
       "location": "[parameters('location')]",
       "dependsOn": [
         "[variables('pubIP1Ref')]",
-        "[variables('subnet1Ref')]"
+        "[variables('vNetRef')]"
       ],
       "properties": {
         "ipConfigurations": [
