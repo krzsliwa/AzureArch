@@ -119,33 +119,27 @@
     "pubIP1Ref": "[resourceId('Microsoft.Network/publicIPAddresses/',parameters('publicIPName1'))]",
     "pubIP2Ref": "[resourceId('Microsoft.Network/publicIPAddresses/',parameters('publicIPName2'))]",
     "nsgRef": "[resourceId('Microsoft.Network/networkSecurityGroups/', parameters('networkSecurityGroupName'))]",
+    "nsgDeploy": "[concat('Microsoft.Resources/deployments/','ksnsgDeploy')]",
     "vNetRef": "[resourceId('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
     "subnet1Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnet1Name'))]",
     "subnet2Ref": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnet2Name'))]"
   },
   "resources": [
     {
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Network/networkSecurityGroups",
-      "name": "[parameters('networkSecurityGroupName')]",
-      "location": "[parameters('location')]",
+      "name": "ksnsgDeploy",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
       "properties": {
-        "securityRules": [
-          {
-            "name": "ksAllowHTTP",
-            "properties": {
-              "description": "Allow HTTP inbound access",
-              "protocol": "Tcp",
-              "sourcePortRange": "*",
-              "destinationPortRange": "80",
-              "sourceAddressPrefix": "*",
-              "destinationAddressPrefix": "*",
-              "access": "Allow",
-              "priority": 100,
-              "direction": "Inbound"
-            }
+        "mode": "Incremental",
+        "templateLink": {
+          "contentVersion": "1.0.0.0",
+          "uri": "https://raw.githubusercontent.com/krzsliwa/AzureArch/master/ARM/nsg.json"
+        },
+        "parameters": {
+          "networkSecurityGroupName": {
+            "value": "[parameters('networkSecurityGroupName')]"
           }
-        ]
+        }
       }
     },
     {
@@ -154,7 +148,7 @@
       "name": "[parameters('vnetName')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[variables('nsgRef')]"
+        "[variables('nsgDeploy')]"
       ],
       "properties": {
         "addressSpace": {
