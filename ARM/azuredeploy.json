@@ -140,6 +140,16 @@
               "addressPrefix": "[parameters('subnet1Prefix')]",
               "networkSecurityGroup": {
                 "id": "[variables('nsgRef')]"
+              }
+            }
+          },
+          {
+            "name": "[parameters('subnet2Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet2Prefix')]",
+              "networkSecurityGroup": {
+                "id": "[variables('nsgRef')]"
+              }
             }
           }
         ]
