@@ -284,6 +284,35 @@
       "dependsOn": [
         "[parameters('nic1Name')]"
       ]
+    },
+    {
+      "name": "ksvmDeploy2",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "contentVersion": "1.0.0.0",
+          "uri": "https://raw.githubusercontent.com/krzsliwa/AzureArch/master/ARM/vm.json"
+        },
+        "parameters": {
+          "vmName": {
+            "value": "ksVM2"
+          },
+          "vmAdminUserName": {
+            "value": "ksadm"
+          },
+          "vmAdminPass": {
+            "value": "@!21#ZSD"
+          },
+          "vmNetworkInterfaceName": {
+            "value": "[variables('nic2Ref')]"
+          }
+        }
+      },
+      "dependsOn": [
+        "[parameters('nic2Name')]"
+      ]
     }
   ]
 }
