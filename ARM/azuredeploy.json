@@ -128,6 +128,27 @@
         "description": "IP Configuration Subnet 2 Name"
       }
     },
+    "vm2Name": {
+      "type": "string",
+      "defaultValue": "ksVM2",
+      "metadata": {
+        "description": "Virtual Machine 2 Name"
+      }
+    },
+    "vm2AdminUserName": {
+      "type": "string",
+      "defaultValue": "ksAdminUser",
+      "metadata": {
+        "description": "Virtual Machine 2 Admin User Name"
+      }
+    },
+    "vm2AdminUserPass": {
+      "type": "securestring",
+      "defaultValue": "d!@#sd222QW",
+      "metadata": {
+        "description": "Virtual Machine 2 Admin User Pass"
+      }
+    },
     "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
@@ -318,13 +339,13 @@
         },
         "parameters": {
           "vmName": {
-            "value": "ksVM2"
+            "value": "[parameters('vm2Name')]"
           },
           "vmAdminUserName": {
-            "value": "ksadm"
+            "value": "[parameters('vm2AdminUserName')]"
           },
           "vmAdminPass": {
-            "value": "@!21#ZSD"
+            "value": "[parameters('vm2AdminUserPass')]"
           },
           "vmNetworkInterfaceName": {
             "value": "[variables('nic2Ref')]"
