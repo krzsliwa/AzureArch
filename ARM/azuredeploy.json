@@ -72,20 +72,6 @@
         "description": "Virtual Machine 1 Name"
       }
     },
-    "vm1AdminUserName": {
-      "type": "string",
-      "defaultValue": "ksAdminUser",
-      "metadata": {
-        "description": "Virtual Machine 1 Admin User Name"
-      }
-    },
-    "vm1AdminUserPass": {
-      "type": "securestring",
-      "defaultValue": "d!@#sd111QW",
-      "metadata": {
-        "description": "Virtual Machine 1 Admin User Pass"
-      }
-    },
     "dnsPrefix2": {
       "type": "string",
       "defaultValue": "ksarm2",
@@ -134,19 +120,17 @@
       "metadata": {
         "description": "Virtual Machine 2 Name"
       }
-    },
-    "vm2AdminUserName": {
+    },    
+    "vmAdminUserName": {
       "type": "string",
-      "defaultValue": "ksAdminUser",
       "metadata": {
-        "description": "Virtual Machine 2 Admin User Name"
+        "description": "Virtual Machine 1 Admin User Name"
       }
     },
-    "vm2AdminUserPass": {
+    "vmAdminUserPass": {
       "type": "securestring",
-      "defaultValue": "d!@#sd222QW",
       "metadata": {
-        "description": "Virtual Machine 2 Admin User Pass"
+        "description": "Virtual Machine 1 Admin User Pass"
       }
     },
     "location": {
@@ -313,10 +297,10 @@
             "value": "[parameters('vm1Name')]"
           },
           "vmAdminUserName": {
-            "value": "[parameters('vm1AdminUserName')]"
+            "value": "[parameters('vmAdminUserName')]"
           },
           "vmAdminPass": {
-            "value": "[parameters('vm1AdminUserPass')]"
+            "value": "[parameters('vmAdminUserPass')]"
           },
           "vmNetworkInterfaceName": {
             "value": "[variables('nic1Ref')]"
@@ -342,10 +326,10 @@
             "value": "[parameters('vm2Name')]"
           },
           "vmAdminUserName": {
-            "value": "[parameters('vm2AdminUserName')]"
+            "value": "[parameters('vmAdminUserName')]"
           },
           "vmAdminPass": {
-            "value": "[parameters('vm2AdminUserPass')]"
+            "value": "[parameters('vmAdminUserPass')]"
           },
           "vmNetworkInterfaceName": {
             "value": "[variables('nic2Ref')]"

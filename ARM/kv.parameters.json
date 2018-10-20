@@ -1,0 +1,22 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmAdminUserName": { 
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/<id>/resourceGroups/KS_resourceGroup/providers/Microsoft.KeyVault/vaults/KS-vault"
+                },
+                "secretName": "w3vmAdminUserName"
+            } 
+        },
+        "vmAdminUserPass": { 
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/<id>/resourceGroups/KS_resourceGroup/providers/Microsoft.KeyVault/vaults/KS-vault"
+                },
+                "secretName": "w3vmAdminUserPass"
+            } 
+        }
+    }
+}
