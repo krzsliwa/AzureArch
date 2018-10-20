@@ -1,0 +1,31 @@
+{
+  "mode": "all",
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Network/virtualNetworks"
+        },
+        {
+          "not": {
+            "field": "name",
+            "like": "[parameters('namePattern')]"
+          }
+        }
+      ]
+    },
+    "then": {
+      "effect": "audit"
+    }
+  },
+  "parameters": {
+    "namePattern": {
+      "type": "String",
+      "metadata": {
+        "displayName": "namePattern",
+        "description": "Pattern to use for names. Can include wildcard (*)."
+      }
+    }
+  }
+}
