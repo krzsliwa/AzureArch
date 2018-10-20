@@ -65,6 +65,27 @@
         "description": "IP Configuration Subnet 1 Name"
       }
     },
+    "vm1Name": {
+      "type": "string",
+      "defaultValue": "ksVM1",
+      "metadata": {
+        "description": "Virtual Machine 1 Name"
+      }
+    },
+    "vm1AdminUserName": {
+      "type": "string",
+      "defaultValue": "ksAdminUser",
+      "metadata": {
+        "description": "Virtual Machine 1 Admin User Name"
+      }
+    },
+    "vm1AdminUserPass": {
+      "type": "securestring",
+      "defaultValue": "d!@#sd111QW",
+      "metadata": {
+        "description": "Virtual Machine 1 Admin User Pass"
+      }
+    },
     "dnsPrefix2": {
       "type": "string",
       "defaultValue": "ksarm2",
@@ -268,13 +289,13 @@
         },
         "parameters": {
           "vmName": {
-            "value": "ksVM1"
+            "value": "[parameters('vm1Name')]"
           },
           "vmAdminUserName": {
-            "value": "ksadm"
+            "value": "[parameters('vm1AdminUserName')]"
           },
           "vmAdminPass": {
-            "value": "@!21#ZSD"
+            "value": "[parameters('vm1AdminUserPass')]"
           },
           "vmNetworkInterfaceName": {
             "value": "[variables('nic1Ref')]"
