@@ -30,6 +30,7 @@ deploy.azcli
 #TYDZIEN3.3 „Zbuduj najprostrzą właśną rolę RBAC, która pozwala użytkownikowi uruchomić maszynę, zatrzymać ją i zgłosić zgłoszenie do supportu przez Portal Azure”
 
 /roles/customRole.json
+
 /roles/deploy.sh
 
 ![diagram](https://raw.githubusercontent.com/krzsliwa/AzureArch/master/ARM/roles/customRole.png)
