@@ -1,0 +1,5 @@
+$resourceGroupName= "week3rg" # the resource group which contains the Key Vault
+$userPrincipalName = "krzysztof.sliwa@predica.pl"
+New-AzureRmRoleDefinition -InputFile "kvDeployRole.json" 
+
+New-AzureRmRoleAssignment -ResourceGroupName $resourceGroupName -RoleDefinitionName "Key Vault resource manager template deployment operator" -SignInName $userPrincipalName

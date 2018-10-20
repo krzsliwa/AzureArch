@@ -1,3 +1,2 @@
 az group create --name week3rg --location westeurope
-az group deployment create --resource-group week3rg --template-file azuredeploy.json --name ksw32
-az group delete --name week3rg 
+az group deployment create --resource-group week3rg --template-uri https://raw.githubusercontent.com/krzsliwa/AzureArch/master/ARM/azuredeploy.json --parameters @kv.parameters.json  --name ksw32

@@ -5,7 +5,7 @@
         "vmAdminUserName": { 
             "reference": {
                 "keyVault": {
-                    "id": "/subscriptions/26e49818-6ab7-4d1e-ba0d-3ca30caac1b4/resourceGroups/week3rg/providers/Microsoft.KeyVault/vaults/ksKVw3"
+                    "id": "/subscriptions/26e49818-6ab7-4d1e-ba0d-3ca30caac1b4/resourceGroups/KS_resourceGroup/providers/Microsoft.KeyVault/vaults/KS-vault"
                 },
                 "secretName": "w3vmAdminUserName"
             } 
@@ -13,7 +13,7 @@
         "vmAdminUserPass": { 
             "reference": {
                 "keyVault": {
-                    "id": "/subscriptions/26e49818-6ab7-4d1e-ba0d-3ca30caac1b4/resourceGroups/week3rg/providers/Microsoft.KeyVault/vaults/ksKVw3"
+                    "id": "/subscriptions/26e49818-6ab7-4d1e-ba0d-3ca30caac1b4/resourceGroups/KS_resourceGroup/providers/Microsoft.KeyVault/vaults/KS-vault"
                 },
                 "secretName": "w3vmAdminUserPass"
             } 
