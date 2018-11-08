@@ -1,0 +1,17 @@
+{
+  "bindings": [
+    {
+      "name": "myTimer",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "*/30 * * * * *"
+    },
+    {
+      "type": "queue",
+      "name": "outputQueueItem",
+      "queueName": "outqueue",
+      "connection": "sahww6_STORAGE",
+      "direction": "out"
+    }
+  ]
+}
